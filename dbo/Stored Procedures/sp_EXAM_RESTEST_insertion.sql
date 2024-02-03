@@ -1,0 +1,42 @@
+﻿CREATE procedure  [dbo].[sp_EXAM_RESTEST_insertion]
+                                               
+                                               
+          @EXAM_RETEST_STD_ID  numeric,
+          @EXAM_RETEST_PLAN_EXAM_ID  numeric,
+          @EXAM_RETEST_OBTAIN_MARKS  float,
+          @EXAM_RETEST_OBTAIN_MARKS_LOG  nvarchar(50), 
+		  @COMMENTS  nvarchar(500),
+		  @TOTAL_DAYS int,
+		  @PRESENT_DAYS int,
+		  @TERM_ID numeric,
+		  @RESTEST_STATUS char(1)
+   
+   
+     as  begin
+
+	 declare @class_id numeric
+	 set @class_id = (select top(1) STDNT_CLASS_PLANE_ID from STUDENT_INFO where STDNT_ID = @EXAM_RETEST_STD_ID)
+
+
+	if @RESTEST_STATUS = 'T'
+	BEGIN
+	   insert into EXAM_RESTEST
+	   select EXAM_ENTRY_STUDENT_ID,EXAM_ENTRY_PLAN_EXAM_ID,EXAM_ENTRY_OBTAIN_MARKS,EXAM_ENTRY_OBTAINED_MARKS_LOG from EXAM_ENTRY
+	   where EXAM_ENTRY_STUDENT_ID = @EXAM_RETEST_STD_ID and EXAM_ENTRY_PLAN_EXAM_ID = @EXAM_RETEST_PLAN_EXAM_ID
+
+	   insert into EXAM_STD_COMMENTS
+	select @EXAM_RETEST_STD_ID, @class_id,@TERM_ID,c.EXAM_STD_COM_COMMENTS,1 from EXAM_STD_COMMENTS c where c.EXAM_STD_COM_STD_ID = @EXAM_RETEST_STD_ID and c.EXAM_STD_COM_CLASS_ID = @class_id and c.EXAM_STD_COM_TERM_ID = @TERM_ID
+   END
+
+
+	update EXAM_ENTRY set EXAM_ENTRY_OBTAIN_MARKS = @EXAM_RETEST_OBTAIN_MARKS
+    where EXAM_ENTRY_STUDENT_ID = @EXAM_RETEST_STD_ID and EXAM_ENTRY_PLAN_EXAM_ID = @EXAM_RETEST_PLAN_EXAM_ID
+
+    update EXAM_STD_ATTENDANCE_INFO set EXAM_STD_ATT_TOTAL_DAYS = @TOTAL_DAYS, EXAM_STD_ATT_PRESENT_DAYS = @PRESENT_DAYS 
+	where EXAM_STD_ATT_STD_ID = @EXAM_RETEST_STD_ID and EXAM_STD_ATT_CLASS_ID = @class_id and EXAM_STD_ATT_TERM_ID = @TERM_ID
+
+	 
+	update EXAM_STD_COMMENTS  set EXAM_STD_COM_COMMENTS = @COMMENTS where EXAM_STD_COM_STD_ID = @EXAM_RETEST_STD_ID and EXAM_STD_COM_CLASS_ID = @class_id and EXAM_STD_COM_TERM_ID = @TERM_ID
+
+     
+end

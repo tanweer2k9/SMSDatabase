@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VYEAR_INFO]
+AS
+SELECT     YEAR_ID AS ID, YEAR_HD_ID AS [Institute ID], YEAR_BR_ID AS [Branch ID], YEAR_NAME AS Name, YEAR_DESC AS Description, YEAR_STATUS AS Status
+FROM         dbo.YEAR_INFO

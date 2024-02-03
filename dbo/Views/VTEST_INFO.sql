@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VTEST_INFO]
+AS
+SELECT     TEST_ID AS ID, TEST_HD_ID AS [Institute ID], TEST_BR_ID AS [Branch ID], TEST_NAME AS Name, TEST_DESC AS Description, TEST_STATUS AS Status
+FROM         dbo.TEST_INFO

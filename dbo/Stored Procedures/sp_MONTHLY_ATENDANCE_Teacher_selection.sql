@@ -1,0 +1,117 @@
+﻿
+CREATE procedure  [dbo].[sp_MONTHLY_ATENDANCE_Teacher_selection]
+                                               
+                                               
+     @STATUS char(1),
+	 @STAFF_ID numeric,
+     @DESIGNATION_NAME nvarchar(50),
+     @ATTENDANCE_HD_ID  numeric,
+     @ATTENDANCE_BR_ID  numeric,
+     @DATE_YEAR nvarchar(10),
+     @DATE_MONTH nvarchar(10),
+     @DATE_DAY nvarchar(10),
+	 @MONTHLY_ATENDANCE_DEPARTMENT_ID numeric
+	 
+   
+     AS BEGIN 
+   if @STATUS = 'L'
+   BEGIN
+      
+    select DESIGNATION_ID as ID, DESIGNATION_NAME as Name from DESIGNATION_INFO
+    where DESIGNATION_STATUS = 'T'
+    and DESIGNATION_HD_ID = @ATTENDANCE_HD_ID and DESIGNATION_BR_ID = @ATTENDANCE_BR_ID 
+
+	select DEP_ID as ID, DEP_NAME as Name from DEPARTMENT_INFO
+    where DEP_STATUS = 'T'
+    and DEP_HD_ID = @ATTENDANCE_HD_ID and DEP_BR_ID = @ATTENDANCE_BR_ID 
+    
+    
+   
+   END
+    ELSE if @STATUS = 'M'
+     BEGIN
+	select WORKING_DAYS_NAME as Name, WORKING_DAYS_VALUE as Value
+    from WORKING_DAYS
+    where 
+    WORKING_DAYS_HD_ID = @ATTENDANCE_HD_ID and
+    WORKING_DAYS_BR_ID = @ATTENDANCE_BR_ID
+    
+
+    
+    SELECT ANN_HOLI_DATE, ANN_HOLI_NAME
+    from ANNUAL_HOLIDAYS
+    where DATEPART(YYYY, ANN_HOLI_DATE)= @DATE_YEAR and DATEPART(mm, ANN_HOLI_DATE) = @DATE_MONTH 
+     and  ANN_HOLI_HD_ID = @ATTENDANCE_HD_ID and
+    ANN_HOLI_BR_ID = @ATTENDANCE_BR_ID
+	and ANN_HOLI_STATUS = 'T'
+      
+    select STAFF_WORKING_DAYS_NAME as Name, STAFF_WORKING_DAYS_DAY_STATUS as Value,
+    STAFF_WORKING_DAYS_TIME_IN as [Time In], STAFF_WORKING_DAYS_TIME_OUT as [Time Out],
+    STAFF_WORKING_DAYS_STAFF_ID as [Staff ID]
+    from STAFF_WORKING_DAYS
+	join TEACHER_INFO t on t.TECH_ID = STAFF_WORKING_DAYS_STAFF_ID
+    where STAFF_WORKING_DAYS_HD_ID = @ATTENDANCE_HD_ID and
+    STAFF_WORKING_DAYS_BR_ID = @ATTENDANCE_BR_ID and t.TECH_STATUS = 'T' 
+     and t.TECH_DEPARTMENT like CASE WHEN @MONTHLY_ATENDANCE_DEPARTMENT_ID = 0 THEN '%'ELSE CAST(@MONTHLY_ATENDANCE_DEPARTMENT_ID as nvarchar(50))END
+      END
+    
+    
+    ELSE if @STATUS = 'S'
+     BEGIN
+     
+	 select * from
+     (select distinct TECH_ID as [Staff ID], TECH_EMPLOYEE_CODE [Employee Code] ,(TECH_FIRST_NAME + ' ' + TECH_LAST_NAME) as Name, TECH_DESIGNATION as Designation, TECH_RANKING
+	from TEACHER_INFO 
+	left join ATTENDANCE_STAFF on ATTENDANCE_STAFF_TYPE_ID = TECH_ID
+	where TECH_DESIGNATION = @DESIGNATION_NAME and 
+	TECH_BR_ID in (select * from  [dbo].[get_centralized_br_id]('S', @ATTENDANCE_BR_ID)) and
+	TECH_HD_ID in (select * from dbo.get_all_hd_id(@ATTENDANCE_HD_ID)) and 
+	TECH_STATUS = 'T'	 
+	--and TECH_LEAVES_TYPE not in ('No Deduction', 'Not Generate Salary')
+	--TECH_STATUS != 'D'	 
+	and TECH_DEPARTMENT like CASE WHEN @MONTHLY_ATENDANCE_DEPARTMENT_ID = 0 THEN '%'ELSE CAST(@MONTHLY_ATENDANCE_DEPARTMENT_ID as nvarchar(50))END 
+	--and TECH_ID in (select ATTENDANCE_STAFF_TYPE_ID from ATTENDANCE_STAFF where DATEPART(YYYY, ATTENDANCE_STAFF_DATE)= @DATE_YEAR and 
+ --  DATEPART(mm, ATTENDANCE_STAFF_DATE) = @DATE_MONTH) 
+   )A order by TECH_RANKING
+    
+      END
+    
+    
+    ELSE if @STATUS = 'A'
+     BEGIN
+        
+		declare @early_minutes int = 0
+		set @early_minutes = (select BR_ADM_EARLY_MINUTES_ALLOWED from BR_ADMIN where BR_ADM_HD_ID = @ATTENDANCE_HD_ID and BR_ADM_ID = @ATTENDANCE_BR_ID)
+		set @early_minutes = ISNULL(@early_minutes, 0)
+        
+   SELECT ATTENDANCE_STAFF_DATE ,ATTENDANCE_STAFF_REMARKS, ATTENDANCE_STAFF_TIME_IN, 
+   ATTENDANCE_STAFF_TIME_OUT, ATTENDANCE_STAFF_CURRENT_TIME_IN as [Current Time In], 
+   ATTENDANCE_STAFF_CURRENT_TIME_OUT as [Current Time Out], CASE WHEN DATEADD(Mi, @early_minutes,CONVERT(time, ATTENDANCE_STAFF_TIME_OUT)) <  CONVERT(time, ATTENDANCE_STAFF_CURRENT_TIME_OUT) and ATTENDANCE_STAFF_REMARKS not in ('LE', 'A') and ATTENDANCE_STAFF_TIME_OUT != '12:00:00 AM' THEN 1 ELSE 0 END [Is Early]
+   
+   from ATTENDANCE_STAFF
+   where 
+   ATTENDANCE_STAFF_TYPE = @DESIGNATION_NAME and
+   ATTENDANCE_STAFF_HD_ID = @ATTENDANCE_HD_ID and
+   ATTENDANCE_STAFF_BR_ID in (select * from  [dbo].[get_centralized_br_id]('S', @ATTENDANCE_BR_ID)) and
+   ATTENDANCE_STAFF_TYPE_ID = @STAFF_ID and
+   DATEPART(YYYY, ATTENDANCE_STAFF_DATE)= @DATE_YEAR and 
+   DATEPART(mm, ATTENDANCE_STAFF_DATE) = @DATE_MONTH and   
+   --ATTENDANCE_STAFF_STATUS != 'D' 
+   ATTENDANCE_STAFF_STATUS != 'D' 
+   order by ATTENDANCE_STAFF_DATE, CAST(ATTENDANCE_STAFF_TIME_IN as datetime)
+   
+   select WORKING_HOURS_TIME_IN as [Time In], WORKING_HOURS_TIME_OUT as [Time Out]
+   from WORKING_HOURS
+   where WORKING_HOURS_BR_ID = @ATTENDANCE_BR_ID and
+   WORKING_HOURS_HD_ID = @ATTENDANCE_HD_ID and
+   WORKING_HOURS_STATUS = 'T'
+    
+     END  
+     
+     
+     
+     
+ 
+	
+ 
+     END

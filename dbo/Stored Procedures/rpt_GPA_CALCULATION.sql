@@ -1,0 +1,32 @@
+﻿
+
+CREATE PROC [dbo].[rpt_GPA_CALCULATION] 
+
+@CLASS_ID numeric,
+@TERM_ID numeric
+
+
+AS
+
+--declare @CLASS_ID numeric = 8
+--declare @TERM_ID numeric = 1
+
+
+select *, ROUND((TotalPoints / CreditHours),3) GPA from
+(
+select 
+s.STDNT_ID,CAST(s.STDNT_SCHOOL_ID as bigint) as StdNo,(s.STDNT_FIRST_NAME + ' ' + s.STDNT_LAST_NAME) as Name, SUM(SUB_CREDIT_HOURS) as CreditHours,SUM(DEF_GRADE_POINTS * SUB_CREDIT_HOURS) TotalPoints
+ from
+EXAM_ENTRY et
+join EXAM_DEF ed on et.EXAM_ENTRY_PLAN_EXAM_ID = ed.EXAM_DEF_ID
+join SCHOOL_PLANE_DEFINITION pd on pd.DEF_ID = ed.EXAM_DEF_CLASS_ID
+join STUDENT_INFO s on s.STDNT_ID = et.EXAM_ENTRY_STUDENT_ID 
+join SUBJECT_INFO sb on sb.SUB_ID = pd.DEF_SUBJECT
+join GRADE_MAPPING gm on gm.GRADE_MAP_CLASS_ID = pd.DEF_CLASS_ID
+join PLAN_GRADE_DEF pgd on pgd.DEF_P_ID = gm.GRADE_MAP_GRADE_PLAN_ID and pgd.DEF_GRADE_STATUS = 'T'
+
+where pd.DEF_CLASS_ID = @CLASS_ID and pd.DEF_TERM = @TERM_ID and gm.GRADE_MAP_CLASS_ID = @CLASS_ID and et.EXAM_ENTRY_OBTAIN_MARKS between DEF_GRADE_MIN_LIMIT and DEF_GRADE_MAX_LIMIT and s.STDNT_STATUS = 'T'
+
+group by STDNT_ID, s.STDNT_SCHOOL_ID,(s.STDNT_FIRST_NAME + ' ' + s.STDNT_LAST_NAME)
+)A order by StdNo
+--SUB_CREDIT_HOURS  DEF_GRADE_POINTS

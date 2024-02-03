@@ -1,0 +1,39 @@
+﻿CREATE procedure  [dbo].[sp_STAFF_LOAN_updation]
+                                               
+                                               
+          @STAFF_LOAN_ID  numeric,
+          @STAFF_LOAN_HD_ID  numeric,
+          @STAFF_LOAN_BR_ID  numeric,
+          @STAFF_LOAN_BASIC_SALARY  float,
+          @STAFF_LOAN_AMOUNT_TYPE  nvarchar(100) ,
+          @STAFF_LOAN_AMOUNT  float,
+          @STAFF_LOAN_DEDUCTION_TYPE  nvarchar(100) ,
+          @STAFF_LOAN_STAFF_ID  numeric,
+          @STAFF_LOAN_DATE  datetime,
+          @STAFF_LOAN_STATUS  char(2),
+          @STAFF_LOAN_USER  nvarchar(100),
+          @STAFF_LOAN_INSTALLS   numeric
+   
+   
+     as begin 
+   
+   
+     update STAFF_LOAN
+ 
+     set
+          STAFF_LOAN_BASIC_SALARY =  @STAFF_LOAN_BASIC_SALARY,
+          STAFF_LOAN_AMOUNT_TYPE =  @STAFF_LOAN_AMOUNT_TYPE,
+          STAFF_LOAN_AMOUNT =  @STAFF_LOAN_AMOUNT,
+          STAFF_LOAN_DEDUCTION_TYPE =  @STAFF_LOAN_DEDUCTION_TYPE,
+          STAFF_LOAN_STAFF_ID =  @STAFF_LOAN_STAFF_ID,
+          STAFF_LOAN_DATE =  @STAFF_LOAN_DATE,
+          STAFF_LOAN_STATUS =  @STAFF_LOAN_STATUS,
+          STAFF_LOAN_USER = @STAFF_LOAN_USER,
+          STAFF_LOAN_INSTALLS = @STAFF_LOAN_INSTALLS
+ 
+     where 
+          STAFF_LOAN_ID =  @STAFF_LOAN_ID and 
+          STAFF_LOAN_HD_ID =  @STAFF_LOAN_HD_ID and 
+          STAFF_LOAN_BR_ID =  @STAFF_LOAN_BR_ID 
+ 
+end

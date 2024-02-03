@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VDEGREE_INFO]
+AS
+SELECT     DGRE_ID AS ID, DGRE_HD_ID AS [Institute ID], DGRE_BR_ID AS [Branch ID], DGRE_NAME AS Name, DGRE_DESC AS Description, DGRE_STATUS AS Status
+FROM         dbo.DEGREE_INFO

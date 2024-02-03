@@ -1,0 +1,19 @@
+﻿CREATE TABLE [dbo].[RIGHTS] (
+    [RIGHTS_HD_ID]                 NUMERIC (18)   NULL,
+    [RIGHTS_BR_ID]                 NUMERIC (18)   NULL,
+    [RIGHTS_RIGHT_PARENTS_CODE]    NVARCHAR (50)  NULL,
+    [RIGHTS_RIGHT_CODE]            NVARCHAR (50)  NULL,
+    [RIGHTS_RIGHT_NAME]            NVARCHAR (100) NULL,
+    [RIGHTS_RIGHT_TEXT]            NVARCHAR (50)  NULL,
+    [RIGHTS_ROLE]                  NVARCHAR (100) NULL,
+    [RIGHTS_ADMIN_LEVEL]           NUMERIC (18)   NULL,
+    [RIGHTS_LEVEL]                 NUMERIC (18)   NULL,
+    [RIGHTS_RIGHT_APPLICABLE]      BIT            NULL,
+    [RIGHTS_SUB_RIGHT_APPLICABLE1] BIT            NULL,
+    [RIGHTS_STATUS]                BIT            NULL,
+    [RIGHTS_IS_DELETED]            BIT            NULL,
+    [RIGHTS_IS_BUTTON]             BIT            NULL,
+    CONSTRAINT [FK_RIGHTS_BR_ADMIN] FOREIGN KEY ([RIGHTS_BR_ID]) REFERENCES [dbo].[BR_ADMIN] ([BR_ADM_ID]),
+    CONSTRAINT [FK_RIGHTS_MAIN_HD_INFO] FOREIGN KEY ([RIGHTS_HD_ID]) REFERENCES [dbo].[MAIN_HD_INFO] ([MAIN_INFO_ID])
+);
+

@@ -1,0 +1,14 @@
+﻿CREATE PROC [dbo].[rpt_LEAVING_CERTIFICATE]
+
+@STUDENT_ID numeric
+AS
+--declare @STUDENT_ID numeric = 1
+
+
+select (STDNT_FIRST_NAME + ' ' + STDNT_LAST_NAME) as Name, STDNT_SCHOOL_ID [School ID], cl.CLASS_DESC Class, STDNT_DOB [DOB], STDNT_REG_DATE [Joining Date], STDNT_DATE_OF_LEAVING [Leaving Date], c.CONDUCT_NAME Conduct, (select top(1)  FEE_COLLECT_FEE_TO_DATE  from FEE_COLLECT where FEE_COLLECT_STD_ID = @STUDENT_ID and FEE_COLLECT_FEE_STATUS = 'Fully Received' order by FEE_COLLECT_FEE_TO_DATE DESC) [Fee Month], 'No. ' +STDNT_WITH_DRAW_NO [withdrawl No], STDNT_REMARKS [Remarks]
+from STUDENT_INFO s
+join SCHOOL_PLANE sp on sp.CLASS_ID = s.STDNT_CLASS_PLANE_ID
+join CONDUCT_INFO c on c.CONDUCT_ID = STDNT_CONDUCT_ID
+join CLASS_INFO cl on cl.CLASS_ID = sp.CLASS_CLASS
+
+where STDNT_ID = @STUDENT_ID

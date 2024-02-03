@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VSECTION_INFO]
+AS
+SELECT     SECT_ID AS ID, SECT_NAME AS Name, SECT_HD_ID AS [Institute ID], SECT_BR_ID AS [Branch ID], SECT_DESC AS Description, SECT_STATUS AS Status
+FROM         dbo.SECTION_INFO

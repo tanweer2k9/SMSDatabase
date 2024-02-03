@@ -1,0 +1,4 @@
+﻿CREATE TYPE [dbo].[type_EXAM_RESULT_SUMMARY_dt_GRADE] AS TABLE (
+    [Grade] NVARCHAR (100) NULL,
+    [Count] NUMERIC (18)   NULL);
+

@@ -1,0 +1,12 @@
+﻿CREATE VIEW [dbo].[VFEE_MODIFICATION]
+AS
+SELECT        dbo.STUDENT_INFO.STDNT_HD_ID AS [Institute ID], dbo.STUDENT_INFO.STDNT_BR_ID AS [Branch ID], dbo.STUDENT_INFO.STDNT_ID AS [Student ID], 
+                         dbo.STUDENT_INFO.STDNT_FIRST_NAME AS [Student Name], dbo.STUDENT_INFO.STDNT_CLASS_PLANE_ID AS [Class ID], 
+                         dbo.FEE_INFO.FEE_NAME AS [Fee Name], dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_FEE AS Fee, dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_FEE_MIN AS [Min Fee %age], 
+                         dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_FEE_MAX AS [Max Fee %age], dbo.STUDENT_INFO.STDNT_STATUS AS Status, 
+                         dbo.PLAN_FEE_DEF.PLAN_FEE_OPERATION AS Operator, dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_STATUS, dbo.FEE_INFO.FEE_ID AS [Fee ID], 
+                         dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_ID AS [Plan Fee Def ID], dbo.STUDENT_INFO.STDNT_SCHOOL_ID AS [School ID]
+FROM            dbo.STUDENT_INFO INNER JOIN
+                         dbo.PLAN_FEE_DEF ON dbo.STUDENT_INFO.STDNT_CLASS_FEE_ID = dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_PLAN_ID INNER JOIN
+                         dbo.FEE_INFO ON dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_FEE_NAME = dbo.FEE_INFO.FEE_ID
+WHERE        (dbo.STUDENT_INFO.STDNT_STATUS = 'T') AND (dbo.PLAN_FEE_DEF.PLAN_FEE_DEF_STATUS = N'T')

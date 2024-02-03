@@ -1,0 +1,23 @@
+﻿CREATE TYPE [dbo].[type_EXAM_ANNUAL_ACADEMIC_DETAIL_TABLE] AS TABLE (
+    [Std ID]          INT            NULL,
+    [Subject]         NVARCHAR (100) NULL,
+    [Total Marks]     NVARCHAR (100) NULL,
+    [Obtained Marks]  NVARCHAR (100) NULL,
+    [Pass Marks]      NVARCHAR (100) NULL,
+    [Percent]         NVARCHAR (100) NULL,
+    [Grade]           NVARCHAR (100) NULL,
+    [Position]        NVARCHAR (100) NULL,
+    [Max Marks]       NVARCHAR (100) NULL,
+    [No of Std]       NVARCHAR (100) NULL,
+    [term_id]         INT            NULL,
+    [Final Term %age] FLOAT (53)     NULL,
+    [Reamrks]         NVARCHAR (100) NULL,
+    [Next Term %age]  FLOAT (53)     NULL,
+    [Term Rank]       INT            NULL,
+    [Marks Type]      NVARCHAR (100) NULL,
+    [Class ID]        INT            NULL,
+    [Assignment]      FLOAT (53)     NULL,
+    [Quiz]            FLOAT (53)     NULL,
+    [Presentation]    FLOAT (53)     NULL,
+    [Test]            FLOAT (53)     NULL);
+

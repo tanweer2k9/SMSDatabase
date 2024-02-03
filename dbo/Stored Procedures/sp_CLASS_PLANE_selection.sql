@@ -1,0 +1,19 @@
+﻿CREATE PROC [dbo].[sp_CLASS_PLANE_selection]
+
+@SESSION_START_DATE date,
+@SESSTION_END_DATE date,
+@HD_ID numeric,
+@BR_ID numeric,
+@STATUS char(1)
+
+AS
+
+if @STATUS = 'L'
+		select CLASS_ID as ID, CLASS_Name as Name from SCHOOL_PLANE
+
+		where
+			CLASS_SESSION_START_DATE = @SESSION_START_DATE
+		and CLASS_SESSION_END_DATE = @SESSTION_END_DATE
+		and CLASS_HD_ID = @HD_ID
+		and CLASS_BR_ID = @BR_ID
+		AND CLASS_STATUS = 'T'

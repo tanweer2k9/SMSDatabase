@@ -1,0 +1,24 @@
+﻿CREATE procedure [dbo].[sp_FEE_COLLECT_MODIFICATION_UPDATION]
+
+ @FEE_COLLECT_STD_ID numeric,
+ @FEE_COLLECT_DEFF NVARCHAR(50),
+ @FEE_COLLECT_FEE float,
+ @FEE_COLLECT_FEE_MIN float,
+ @FEE_COLLECT_FEE_MAX float
+
+AS BEGIN
+
+		update VFEE_MODIFICATION
+		set 
+		[Fee] = @FEE_COLLECT_FEE,
+		[Min Fee %age] = @FEE_COLLECT_FEE_MIN,
+		[Max Fee %age] = @FEE_COLLECT_FEE_MAX
+
+		WHERE [Student ID] = @FEE_COLLECT_STD_ID and [Fee Name] =  @FEE_COLLECT_DEFF
+
+
+		--select * from VFEE_MODIFICATION WHERE [Student ID] = @FEE_COLLECT_STD_ID and [Fee Name] =  @FEE_COLLECT_DEFF
+
+		select 'ok'
+
+END

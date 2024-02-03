@@ -1,0 +1,6 @@
+﻿CREATE PROC sp_TIMER_SETTING_Selection
+
+
+AS
+
+select IS_TIMER_STOP from TIMER_SETTING

@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[HELP_MANUAL] (
+    [SCREEN_NAME] NVARCHAR (200) NULL,
+    [LINKS]       NVARCHAR (MAX) NULL
+);
+

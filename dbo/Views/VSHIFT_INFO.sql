@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VSHIFT_INFO]
+AS
+SELECT     SHFT_ID AS ID, SHFT_HD_ID AS [Institute ID], SHFT_BR_ID AS [Branch ID], SHFT_NAME AS Name, SHFT_DESC AS Description, SHFT_STATUS AS Status
+FROM         dbo.SHIFT_INFO

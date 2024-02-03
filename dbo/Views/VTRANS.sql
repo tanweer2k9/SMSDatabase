@@ -1,0 +1,7 @@
+﻿CREATE VIEW [dbo].[VTRANS]
+AS
+SELECT     dbo.COA_TRANS.COA_TRANS_ID AS ID, dbo.COA_TRANS.COA_TRANS_NAME AS Name, dbo.COA_TRANS.COA_TRANS_QTY AS Qty, 
+                      dbo.COA_TRANS.COA_TRANS_VALUE AS Value, dbo.COA.COA_TYPE AS Type, dbo.COA.COA_PARENT_ID AS [Parent ID], dbo.COA_TRANS.COA_TRANS_DATE AS Date, 
+                      dbo.COA_TRANS.COA_TRANS_STATUS AS Status, dbo.COA_TRANS.COA_TRANS_HD_ID AS [Institute ID], dbo.COA_TRANS.COA_TRANS_BR_ID AS [Branch ID]
+FROM         dbo.COA INNER JOIN
+                      dbo.COA_TRANS ON dbo.COA.COA_ID = dbo.COA_TRANS.COA_TRANS_CID

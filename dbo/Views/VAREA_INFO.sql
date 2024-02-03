@@ -1,0 +1,4 @@
+﻿CREATE VIEW [dbo].[VAREA_INFO]
+AS
+SELECT        AREA_ID AS ID, AREA_HD_ID AS [Institute ID], AREA_BR_ID AS [Branch ID], AREA_NAME AS Name, AREA_DESC AS Description, AREA_STATUS AS Status
+FROM            dbo.AREA_INFO

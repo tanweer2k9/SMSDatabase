@@ -1,0 +1,5 @@
+﻿CREATE VIEW [dbo].[VSTAFF_TYPE_INFO]
+AS
+SELECT        STAFF_TYPE_ID AS ID, STAFF_TYPE_HD_ID AS [Institute ID], STAFF_TYPE_BR_ID AS [Branch ID], STAFF_TYPE_NAME AS Name, 
+                         STAFF_TYPE_DESC AS description, STAFF_TYPE_STATUS AS Status
+FROM            dbo.STAFF_TYPE_INFO

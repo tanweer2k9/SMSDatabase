@@ -1,0 +1,5 @@
+﻿CREATE VIEW [dbo].[VCONDUCT_INFO]
+AS
+SELECT        CONDUCT_ID AS ID, CONDUCT_HD_ID AS [Institute ID], CONDUCT_BR_ID AS [Branch ID], CONDUCT_NAME AS Name, CONDUCT_DESC AS Description, 
+                         CONDUCT_STATUS AS Status
+FROM            dbo.CONDUCT_INFO

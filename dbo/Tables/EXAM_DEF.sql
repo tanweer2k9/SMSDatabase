@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[EXAM_DEF] (
+    [EXAM_DEF_ID]                                  NUMERIC (18)  IDENTITY (1, 1) NOT NULL,
+    [EXAM_DEF_PID]                                 NUMERIC (18)  NULL,
+    [EXAM_DEF_CLASS_ID]                            NUMERIC (18)  NULL,
+    [EXAM_DEF_SUBJECT_TYPE_ID]                     NUMERIC (18)  NULL,
+    [EXAM_DEF_TOTAL_MARKS]                         FLOAT (53)    NULL,
+    [EXAM_DEF_PASS_%AGE]                           FLOAT (53)    NULL,
+    [EXAM_DEF_NEXT_TERM_%AGE]                      FLOAT (53)    NULL,
+    [EXAM_DEF_FINAL_%AGE]                          FLOAT (53)    NULL,
+    [EXAM_DEF_STATUS]                              CHAR (2)      NULL,
+    [EXAM_DEF_MARKS_TYPE]                          NVARCHAR (50) NULL,
+    [EXAM_DEF_GRACE_NUMBERS]                       FLOAT (53)    NULL,
+    [EXAM_DEF_TERM_RANKS_TEST]                     NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_TEST_PERCENTAGE]          NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_ASSIGNMENTS]              NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_ASSIGNMENTS_PERCENTAGE]   NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_PRESENTATIONS]            NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_PRESENTATIONS_PERCENTAGE] NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_QUIZ]                     NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_RANKS_QUIZ_PERCENTAGE]          NVARCHAR (50) NULL,
+    [EXAM_DEF_TERM_BEST_TESTS]                     INT           NULL,
+    CONSTRAINT [PK_EXAM_DEF] PRIMARY KEY CLUSTERED ([EXAM_DEF_ID] ASC),
+    CONSTRAINT [FK_EXAM_DEF_EXAM] FOREIGN KEY ([EXAM_DEF_PID]) REFERENCES [dbo].[EXAM] ([EXAM_ID]),
+    CONSTRAINT [FK_EXAM_DEF_SCHOOL_PLANE_DEFINITION] FOREIGN KEY ([EXAM_DEF_CLASS_ID]) REFERENCES [dbo].[SCHOOL_PLANE_DEFINITION] ([DEF_ID])
+);
+

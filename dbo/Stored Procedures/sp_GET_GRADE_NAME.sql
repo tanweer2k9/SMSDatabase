@@ -1,0 +1,7 @@
+﻿CREATE PROC [dbo].[sp_GET_GRADE_NAME]
+@CLASS_ID int,
+@PERCENT float
+
+AS
+
+select dbo.get_GRADE_NAME(@CLASS_ID, @PERCENT)

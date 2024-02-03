@@ -1,0 +1,7 @@
+﻿CREATE VIEW [dbo].[VSMS_SCREEN]
+AS
+SELECT        SMS_SCREEN_ID AS ID, SMS_SCREEN_NAME AS [Screen Name], SMS_SCREEN_INSERT AS Insertion, SMS_SCREEN_UPDATE AS Updation, 
+                         SMS_SCREEN_DELETE AS Deletion, SMS_SCREEN_OPEN AS [Open], SMS_SCREEN_STUDENT AS Student, SMS_SCREEN_PARENTS AS Parents, 
+                         SMS_SCREEN_ADMIN AS Admin, SMS_SCREEN_SUPER_ADMIN AS [Super Admin], SMS_SCREEN_STAFF AS Staff, SMS_SCREEN_STATUS AS Status, 
+                         SMS_SCREEN_HD_ID AS HD_ID, SMS_SCREEN_BR_ID AS BR_ID, RIGHTS_PAGE_NAME AS [Rights Page Name]
+FROM            dbo.SMS_SCREEN

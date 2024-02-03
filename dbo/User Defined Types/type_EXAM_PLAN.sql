@@ -1,0 +1,22 @@
+﻿CREATE TYPE [dbo].[type_EXAM_PLAN] AS TABLE (
+    [ID]                         INT           NULL,
+    [Term]                       INT           NULL,
+    [Subject]                    INT           NULL,
+    [Subject Type]               INT           NULL,
+    [Marks Type]                 NVARCHAR (50) NULL,
+    [Grace Numbers]              NUMERIC (18)  NULL,
+    [Total Marks]                FLOAT (53)    NULL,
+    [Pass %age]                  FLOAT (53)    NULL,
+    [%age In Next Term]          FLOAT (53)    NULL,
+    [Terms Test]                 NVARCHAR (50) NULL,
+    [Term Test Percent]          NVARCHAR (50) NULL,
+    [Terms Assignment]           NVARCHAR (50) NULL,
+    [Terms Assignment Percent]   NVARCHAR (50) NULL,
+    [Terms Presentation]         NVARCHAR (50) NULL,
+    [Terms Presentation Percent] NVARCHAR (50) NULL,
+    [Terms Quiz]                 NVARCHAR (50) NULL,
+    [Terms Quiz Percent]         NVARCHAR (50) NULL,
+    [Best Tests]                 INT           NULL,
+    [%age In Final]              FLOAT (53)    NULL,
+    [PID]                        INT           NULL);
+

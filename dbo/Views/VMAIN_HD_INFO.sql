@@ -1,0 +1,21 @@
+﻿
+CREATE VIEW [dbo].[VMAIN_HD_INFO]
+AS
+SELECT        dbo.MAIN_HD_INFO.MAIN_INFO_ID AS ID, dbo.MAIN_HD_INFO.MAIN_INFO_INSTITUTION_LEVEL AS [Institute Level val], dbo.INSTITUTION_LEVEL_INFO.INST_LEVEL_NAME AS [Institute Level], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_INSTITUTION_FULL_NAME AS [Institute Name], dbo.MAIN_HD_INFO.MAIN_INFO_INSTITUTION_SHORT_NAME AS [Short Name], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_INSTITUTION_LOGO AS Logo, dbo.MAIN_HD_INFO.MAIN_INFO_BRANCHES AS Branches, dbo.MAIN_HD_INFO.MAIN_INFO_HEAD_OFFICE AS [Head Office], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_SUB_OFFICE AS [Sub Office], dbo.MAIN_HD_INFO.MAIN_INFO_EMAIL AS Email, dbo.MAIN_HD_INFO.MAIN_INFO_MOBILE AS [Mobile #], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_LAND_LINE AS [Land Line #], dbo.MAIN_HD_INFO.MAIN_INFO_FAX AS Fax, dbo.MAIN_HD_INFO.MAIN_INFO_SESSION_START_DATE AS [Session Start Date], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_SESSION_END_DATE AS [Session End Date], dbo.MAIN_HD_INFO.MAIN_INFO_SCHOOL_WEBSITE AS Website, dbo.MAIN_HD_INFO.MAIN_INFO_CITY AS City, 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_COUNTRY AS [Country val], dbo.NATIONALITY_INFO.NATIONALITY_NAME AS Country, dbo.MAIN_HD_INFO.MAIN_INFO_DATE_FORMAT AS [Date Format val], 
+                         dbo.DATE_INFO.DATE_NAME AS [Date Format], dbo.MAIN_HD_INFO.MAIN_INFO_STATUS AS Status, dbo.USER_INFO.USER_TYPE AS [Login Type], dbo.USER_INFO.USER_STATUS AS [Login Status], 
+                         dbo.USER_INFO.USER_NAME AS [User Name], dbo.USER_INFO.USER_PASSWORD AS Password, dbo.MAIN_HD_INFO.MAIN_INFO_POINTOUT_URL AS [Point Out URL], 
+                         dbo.MAIN_HD_INFO.MAIN_INFO_LOGO_REPORTS AS [Reports Logo], dbo.MAIN_HD_INFO.MAIN_INFO_FORE_COLOR AS [Fore Color], dbo.MAIN_HD_INFO.MAIN_INFO_BACK_COLOR AS [Back Color]
+FROM            dbo.MAIN_HD_INFO INNER JOIN
+                         dbo.NATIONALITY_INFO ON dbo.MAIN_HD_INFO.MAIN_INFO_COUNTRY = dbo.NATIONALITY_INFO.NATIONALITY_ID INNER JOIN
+                         dbo.INSTITUTION_LEVEL_INFO ON dbo.MAIN_HD_INFO.MAIN_INFO_INSTITUTION_LEVEL = dbo.INSTITUTION_LEVEL_INFO.INST_LEVEL_ID INNER JOIN
+                         dbo.DATE_INFO ON dbo.MAIN_HD_INFO.MAIN_INFO_DATE_FORMAT = dbo.DATE_INFO.DATE_ID INNER JOIN
+                         dbo.USER_INFO ON dbo.MAIN_HD_INFO.MAIN_INFO_ID = dbo.USER_INFO.USER_HD_ID
+WHERE        (dbo.MAIN_HD_INFO.MAIN_INFO_STATUS <> 'D') AND (dbo.USER_INFO.USER_TYPE = N'SA') AND (dbo.USER_INFO.USER_STATUS <> 'D') AND (dbo.USER_INFO.USER_ID NOT IN
+                             (SELECT        TECH_USER_INFO_ID
+                               FROM            dbo.TEACHER_INFO))

@@ -1,0 +1,24 @@
+﻿
+CREATE PROC [dbo].[sp_CHECK_PENDING_ATTENDACNE]
+
+@STATUS char(1),
+@DATE date,
+@HD_ID numeric,
+@BR_ID numeric,
+@STAFF_ID numeric
+
+AS
+
+declare @staff nvarchar(50) = '%'
+
+
+if @STAFF_ID != 0
+BEGIN
+	set @staff = CAST(@STAFF_ID as nvarchar(50))
+END
+
+
+select COUNT(*) from ATTENDANCE_STAFF where ATTENDANCE_STAFF_HD_ID = @HD_ID and ATTENDANCE_STAFF_BR_ID = @BR_ID and DATEPART(MM,ATTENDANCE_STAFF_DATE) = DATEPART(MM,@DATE)
+and DATEPART(YYYY,ATTENDANCE_STAFF_DATE) = DATEPART(YYYY,@DATE) and ATTENDANCE_STAFF_TIME_OUT = '12:00:00 AM' and ATTENDANCE_STAFF_TYPE_ID like @staff
+
+and ATTENDANCE_STAFF_TYPE_ID not in (select TECH_ID from TEACHER_INFO where TECH_LEAVES_TYPE in ('No Deduction', 'Not Generate Salary') )

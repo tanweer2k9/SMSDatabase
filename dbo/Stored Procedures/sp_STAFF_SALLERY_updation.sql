@@ -1,0 +1,67 @@
+﻿CREATE procedure  [dbo].[sp_STAFF_SALLERY_updation]
+                                               
+                                            
+          @STATUS char,    
+          @STAFF_SALLERY_ID  numeric,
+          @STAFF_SALLERY_HD_ID  numeric,
+          @STAFF_SALLERY_BR_ID  numeric,
+          @STAFF_SALLERY_STAFF_ID  numeric,
+          @STAFF_SALLERY_WORKING_DAYS  int,
+          @STAFF_SALLERY_PRESENT  int,
+          @STAFF_SALLERY_ABSENTS  int,
+          @STAFF_SALLERY_LATE  int,
+          @STAFF_SALLERY_LEAVES  int,
+          @STAFF_SALLERY_DATE  date,
+          @STAFF_SALLERY_GROSS_EARN  float,
+          @STAFF_SALLERY_GROSS_DEDUCT  float,
+          @STAFF_SALLERY_ABSENET_DEDUCT_AMOUNT  float,
+          @STAFF_SALLERY_NET_TOLTAL  float,
+          @STAFF_SALLERY_NET_STATUS  nvarchar(50) ,
+          @STAFF_SALLERY_NET_RECEIVED  float,
+          @STAFF_SALLERY_RECEIVED_DATE date
+          
+   
+   
+     as begin 
+   
+   if @STATUS = 'S'
+   begin
+   update STAFF_SALLERY
+ 
+     set
+          STAFF_SALLERY_NET_RECEIVED =  @STAFF_SALLERY_NET_RECEIVED,
+          STAFF_SALLERY_NET_STATUS = @STAFF_SALLERY_NET_STATUS,
+          STAFF_SALLERY_RECEIVED_DATE = @STAFF_SALLERY_RECEIVED_DATE
+     where 
+          STAFF_SALLERY_ID =  @STAFF_SALLERY_ID and 
+          STAFF_SALLERY_HD_ID =  @STAFF_SALLERY_HD_ID 
+          --and STAFF_SALLERY_BR_ID =  @STAFF_SALLERY_BR_ID 
+          
+   end
+   
+   else
+   begin
+     update STAFF_SALLERY
+ 
+     set
+          STAFF_SALLERY_STAFF_ID =  @STAFF_SALLERY_STAFF_ID,
+          STAFF_SALLERY_WORKING_DAYS =  @STAFF_SALLERY_WORKING_DAYS,
+          STAFF_SALLERY_PRESENT =  @STAFF_SALLERY_PRESENT,
+          STAFF_SALLERY_ABSENTS =  @STAFF_SALLERY_ABSENTS,
+          STAFF_SALLERY_LATE =  @STAFF_SALLERY_LATE,
+          STAFF_SALLERY_LEAVES =  @STAFF_SALLERY_LEAVES,
+          STAFF_SALLERY_DATE =  @STAFF_SALLERY_DATE,
+          STAFF_SALLERY_GROSS_EARN =  @STAFF_SALLERY_GROSS_EARN,
+          STAFF_SALLERY_GROSS_DEDUCT =  @STAFF_SALLERY_GROSS_DEDUCT,
+          STAFF_SALLERY_ABSENET_DEDUCT_AMOUNT =  @STAFF_SALLERY_ABSENET_DEDUCT_AMOUNT,
+          STAFF_SALLERY_NET_TOLTAL =  @STAFF_SALLERY_NET_TOLTAL,
+          STAFF_SALLERY_NET_STATUS =  @STAFF_SALLERY_NET_STATUS,
+          STAFF_SALLERY_NET_RECEIVED =  @STAFF_SALLERY_NET_RECEIVED,
+          STAFF_SALLERY_RECEIVED_DATE = @STAFF_SALLERY_RECEIVED_DATE
+ 
+     where 
+          STAFF_SALLERY_ID =  @STAFF_SALLERY_ID and 
+          STAFF_SALLERY_HD_ID =  @STAFF_SALLERY_HD_ID
+           --and           STAFF_SALLERY_BR_ID =  @STAFF_SALLERY_BR_ID 
+ end
+end

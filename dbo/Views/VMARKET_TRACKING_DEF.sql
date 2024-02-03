@@ -1,0 +1,6 @@
+﻿CREATE VIEW [dbo].[VMARKET_TRACKING_DEF]
+AS
+SELECT        TRACK_DEF_ID AS ID, TRACK_DEF_PID AS PID, TRACK_DEF_MEETING_DATE AS [Meeting Date], TRACK_DEF_MEETING_PERSON AS [Meeting Person], 
+                         TRACK_DEF_COMMENTS_BY_CLIENT AS [Client Comments], TRACK_DEF_COMMENTS_BY_MARKETIG_AGENT AS [Comments By Marketing Person], 
+                         TRACK_DEF_NEXT_SCHEDULE_MEETING AS [Next Meeting]
+FROM            dbo.MARKET_TRACKING_DEF

@@ -1,0 +1,6 @@
+﻿CREATE VIEW [dbo].[VFEE_HISTORY]
+AS
+SELECT     FEE_HISTORY_ID AS ID, FEE_HISTORY_FEE AS [Current Fee], FEE_HISTORY_PAID AS [Fee Received], FEE_HISTORY_ARREARS AS Arrears, 
+                      FEE_HISTORY_ARREARS_RECEIVED AS [Arrears Received], FEE_HISTORY_NET_TOTAL AS [Total Fee], FEE_HISTORY_DATE AS Date, 
+                      FEE_HISTORY_PREVIOUS_DATE AS [Previous Dates], FEE_HISTORY_STATUS AS Status
+FROM         dbo.FEE_HISTORY

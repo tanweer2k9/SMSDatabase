@@ -1,0 +1,145 @@
+﻿CREATE procedure  [dbo].[sp_BR_ADMIN_updation]                                                                                              
+          @BR_ADM_ID  numeric,
+          @BR_ADM_HD_ID  numeric,
+          @BR_ADM_NAME  nvarchar(50) ,
+          @BR_ADM_ADDRESS  nvarchar(100) ,
+          @BR_ADM_PHONE  nvarchar(50) ,
+          @BR_ADM_EMAIL  nvarchar(50) ,
+          @BR_ADM_MOBILE  nvarchar(50) ,
+          @BR_ADM_FAX  nvarchar(50) ,
+          @BR_ADM_STATUS  char(2) ,
+          @USER_STATUS char(2),
+		  @BR_ADM_CITY numeric,
+		  @BR_ADM_COUNTRY numeric,
+		  @BR_ADM_ACCT_START_DATE DATE,
+		  @BR_ADM_ACCT_END_DATE DATE,
+		  @WORKING_HOURS_TIME_IN nvarchar(20),
+		  @WORKING_HOURS_TIME_OUT nvarchar(20),
+		  @BR_ADM_WEBSITE NVARCHAR(50),
+		  @BR_ADM_BANK_NAME nvarchar(50),
+		  @BR_ADM_ACCT_TITLE nvarchar(50),
+		  @BR_ADM_ACCT_NO nvarchar(50),
+		  @BR_ADM_STAFF_CENT_BR_ID int,
+		  @BR_ADM_PARENT_CENT_BR_ID int,
+		  @BR_ADM_ASSEMENT_TYPE nvarchar(50),
+		 
+		  @REPORT_SETTING_REPORT_NAME nvarchar(50),
+		  @REPORT_SETTING_REPORT_VALUE nvarchar(50),
+		   
+          @FEE_SETTING_FINE  int,
+          @FEE_SETTING_REPRINT_CHARGES  float,
+          @FEE_SETTING_FEE_CRITERIA  int ,
+          @BR_ADM_FEE_HISTORY  bit,
+          @FEE_SETTING_REPRINT_HISTORY  bit,
+          @FEE_SETTING_ARREARS_WITH_DUE_DATE  bit,
+          @FEE_SETTING_INVOICE_MOBILE_NO NVARCHAR(100),
+		  @USER_PASSWORD nvarchar(50),
+		  @BR_ADM_SMS_API_ID numeric,
+		  @BR_ADM_PAYROLL_MINUTES_IN_HOUR int,
+		  @BR_ADM_PAYROLL_HOURS_IN_DAY int,
+		  @BR_ADM_PAYROLL_IS_OVERTIME_MONTHLY_SLIP_GENERATE char(1),
+		  @BR_ADM_PAYROLL_LATE_MINUTES int,
+		  @BR_ADM_PAYROLL_COMMSSION_FORMULA nvarchar(200),
+		  @BR_ADM_OVERTIME_AFTER_TIMEOUT char(1),
+		  @BR_ADM_OVERTIME_CALCULATION_TYPE nvarchar(50),
+		  @BR_ADM_IS_ADVANCE_ACCOUNTING	bit,
+		  @BR_ADM_IS_ADVANCE_CLASS_PLAN	bit,
+          @BR_ADM_IS_FEES_WITH_ACCOUNTS	bit,
+		  @BR_ADM_FEES_PER_MONTHS float,
+		  @BR_ADM_STUDENT_LATE_MINUTES int,		 
+		  @BR_ADM_SESSION numeric,
+		  @BR_ADM_EARLY_MINUTES_ALLOWED int,
+		  @BR_ADM_HALF_DAY_MINUTES int,
+		  @BANK_DETAIL1 nvarchar(MAX),
+		  @BANK_DETAIL2 nvarchar(MAX),
+		   @CO_TITLE nvarchar(500)
+
+   as begin 
+   update USER_INFO
+   set
+   USER_STATUS = @USER_STATUS,
+   USER_DISPLAY_NAME =  @BR_ADM_NAME,
+   USER_PASSWORD = @USER_PASSWORD
+  
+   where  USER_HD_ID =  @BR_ADM_HD_ID and
+          USER_BR_ID =  @BR_ADM_ID and
+          USER_TYPE = 'A' and 
+		  USER_ID not in (select TECH_USER_INFO_ID from TEACHER_INFO where TECH_HD_ID = @BR_ADM_HD_ID and TECH_BR_ID = @BR_ADM_ID)
+		  and  USER_STATUS != 'D'          
+     
+  --   if @BR_ADM_SMS_API_ID = 0
+  --   begin
+		--set @BR_ADM_SMS_API_ID = (select MAX(SMS_API_ID) from SMS_API)
+  --   end
+         
+     update BR_ADMIN 
+     set          
+          BR_ADM_NAME =  @BR_ADM_NAME,
+          BR_ADM_ADDRESS =  @BR_ADM_ADDRESS,
+          BR_ADM_PHONE =  @BR_ADM_PHONE,
+          BR_ADM_EMAIL =  @BR_ADM_EMAIL,
+          BR_ADM_MOBILE =  @BR_ADM_MOBILE,
+          BR_ADM_FAX =  @BR_ADM_FAX,
+          BR_ADM_STATUS =  @BR_ADM_STATUS,
+          BR_ADM_CITY = @BR_ADM_CITY ,
+          BR_ADM_COUNTRY = @BR_ADM_COUNTRY,          
+          BR_ADM_ACCT_START_DATE = @BR_ADM_ACCT_START_DATE, 
+          BR_ADM_ACCT_END_DATE = @BR_ADM_ACCT_END_DATE,
+          BR_ADM_WEBSITE = @BR_ADM_WEBSITE,
+          BR_ADM_BANK_NAME = @BR_ADM_BANK_NAME,
+		  BR_ADM_ACCT_TITLE = @BR_ADM_ACCT_TITLE,
+		  BR_ADM_ACCT_NO = @BR_ADM_ACCT_NO,
+		  BR_ADM_STAFF_CENT_BR_ID = @BR_ADM_STAFF_CENT_BR_ID,
+		  BR_ADM_PARENT_CENT_BR_ID = @BR_ADM_PARENT_CENT_BR_ID,
+		  BR_ADM_ASSEMENT_TYPE = @BR_ADM_ASSEMENT_TYPE,
+		  BR_ADM_SMS_API_ID = @BR_ADM_SMS_API_ID,
+		  BR_ADM_PAYROLL_MINUTES_IN_HOUR = @BR_ADM_PAYROLL_MINUTES_IN_HOUR ,
+		  BR_ADM_PAYROLL_HOURS_IN_DAY = @BR_ADM_PAYROLL_HOURS_IN_DAY,
+		  BR_ADM_PAYROLL_IS_OVERTIME_MONTHLY_SLIP_GENERATE = @BR_ADM_PAYROLL_IS_OVERTIME_MONTHLY_SLIP_GENERATE,
+		  BR_ADM_PAYROLL_LATE_MINUTES = @BR_ADM_PAYROLL_LATE_MINUTES,
+		  BR_ADM_PAYROLL_COMMSSION_FORMULA = @BR_ADM_PAYROLL_COMMSSION_FORMULA, 
+		  BR_ADM_OVERTIME_AFTER_TIMEOUT = @BR_ADM_OVERTIME_AFTER_TIMEOUT,
+		  BR_ADM_OVERTIME_CALCULATION_TYPE = @BR_ADM_OVERTIME_CALCULATION_TYPE,
+		  BR_ADM_IS_ADVANCE_ACCOUNTING = @BR_ADM_IS_ADVANCE_ACCOUNTING	,
+		  BR_ADM_IS_ADVANCE_CLASS_PLAN = @BR_ADM_IS_ADVANCE_CLASS_PLAN	,
+          BR_ADM_IS_FEES_WITH_ACCOUNTS = @BR_ADM_IS_FEES_WITH_ACCOUNTS	,
+		  BR_ADM_FEES_PER_MONTHS = @BR_ADM_FEES_PER_MONTHS,
+		  BR_ADM_STUDENT_LATE_MINUTES = @BR_ADM_STUDENT_LATE_MINUTES,
+		  BR_ADM_SESSION = @BR_ADM_SESSION ,
+		  BR_ADM_EARLY_MINUTES_ALLOWED = @BR_ADM_EARLY_MINUTES_ALLOWED ,
+		  BR_ADM_HALF_DAY_MINUTES = @BR_ADM_HALF_DAY_MINUTES
+		 
+     where 
+          BR_ADM_HD_ID =  @BR_ADM_HD_ID and
+          BR_ADM_ID =  @BR_ADM_ID
+                    
+          EXEC sp_WORKING_HOURS_updation 0,@BR_ADM_HD_ID,@BR_ADM_ID,@WORKING_HOURS_TIME_IN,@WORKING_HOURS_TIME_OUT,'T'
+          EXEC  sp_FEE_SETTING_updation 0,@BR_ADM_HD_ID,@BR_ADM_ID,@FEE_SETTING_FINE,@FEE_SETTING_REPRINT_CHARGES,@FEE_SETTING_FEE_CRITERIA,@BR_ADM_FEE_HISTORY,@FEE_SETTING_REPRINT_HISTORY,@FEE_SETTING_ARREARS_WITH_DUE_DATE, @FEE_SETTING_INVOICE_MOBILE_NO  
+          
+          
+          update REPORT_SETTING
+          set
+			REPORT_SETTING_REPORT_NAME = @REPORT_SETTING_REPORT_NAME,
+			REPORT_SETTING_REPORT_VALUE = @REPORT_SETTING_REPORT_VALUE			
+          where 
+			REPORT_SETTING_HD_ID = @BR_ADM_HD_ID and
+			REPORT_SETTING_BR_ID = @BR_ADM_ID
+			
+          
+          select 'ok','U',@BR_ADM_HD_ID [Institue ID],@BR_ADM_ID [Branch ID]
+
+		 declare @count_bank_detail int = 0
+
+		 select @count_bank_detail =  ISNULL(COUNT(*),0) from FeeChallanBankDetail where BrId = @BR_ADM_ID
+
+		 if @count_bank_detail = 0 
+		 BEGIN
+			insert into FeeChallanBankDetail 
+			select @BR_ADM_HD_ID, @BR_ADM_ID, @BANK_DETAIL1,@BANK_DETAIL2,@CO_TITLE, '','',CAST(0 as bit),GETDATE(),NULL,NULL,NULL
+		 END 
+		 ELSE
+		 BEGIN
+			update FeeChallanBankDetail set BankDetail1 = @BANK_DETAIL1, BankDetail2 = @BANK_DETAIL2, CareOfTitle=@CO_TITLE,UpdatedDate = GETDATE() where BrId = @BR_ADM_ID 
+		 END
+ 
+end

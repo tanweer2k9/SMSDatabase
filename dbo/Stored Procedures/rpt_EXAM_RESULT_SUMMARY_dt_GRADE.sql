@@ -1,0 +1,7 @@
+﻿CREATE PROC [dbo].[rpt_EXAM_RESULT_SUMMARY_dt_GRADE]
+
+@dt_GRADE type_EXAM_RESULT_SUMMARY_dt_GRADE READONLY
+AS 
+BEGIN
+	select * from @dt_GRADE
+END

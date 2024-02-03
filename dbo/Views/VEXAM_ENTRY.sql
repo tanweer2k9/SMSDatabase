@@ -1,0 +1,6 @@
+﻿CREATE VIEW [dbo].[VEXAM_ENTRY]
+AS
+SELECT        EXAM_ENTRY_ID AS ID, EXAM_ENTRY_PLAN_EXAM_ID AS [Plan Exam ID], EXAM_ENTRY_EXAM_TYPE AS [EXAM TYPE], 
+                         EXAM_ENTRY_STUDENT_ID AS [Student ID], EXAM_ENTRY_OBTAIN_MARKS AS [Obtain Marks], EXAM_ENTRY_STATUS AS Status, 
+                         EXAM_ENTRY_OBTAINED_MARKS_LOG AS [Obtained Marks Log]
+FROM            dbo.EXAM_ENTRY
